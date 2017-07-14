@@ -1,4 +1,6 @@
 
+require("miditest")
+
 
 
 function love.load()
@@ -16,6 +18,8 @@ function love.draw()
     love.graphics.setColor(0, 200, 0)
     love.graphics.print("Hello World", 400, 300)
 
+    -- Prep for grid
+    love.graphics.setColor(200, 0, 0, 100)
 
     drawGrid()
    
@@ -27,11 +31,11 @@ end
 function drawGrid()
  
  	-- Global values
-	inc = 30
-	-- love.graphics.setColor(0, 110, 0, 1)
+	inc = 33
+	love.graphics.setFont(font)
  	windowHeight = love.graphics.getHeight()
     windowWidth = love.graphics.getWidth()
-
+	
 
     -- Initialize parameters
     x1 = 0
@@ -52,4 +56,6 @@ function drawGrid()
     	y1 = y1 + inc
     	y2 = y2 + inc
     end
+
+    -- Print coordinates
 end
