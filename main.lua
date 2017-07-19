@@ -1,6 +1,6 @@
 
 require("miditest")
-
+io.stdout:setvbuf('no') -- Allows console printing on macOS
 
 
 function love.load()
@@ -8,7 +8,9 @@ function love.load()
     love.graphics.setBackgroundColor(255, 255, 255)
     love.graphics.setColor(0, 0, 0)
 
-    love.window.setMode(1000, 1000, {resizable = true, highdpi = true, msaa = 8})
+
+    -- Run MIDI
+    -- doTheThing()
 end
 
 
@@ -21,7 +23,7 @@ function love.draw()
     -- Prep for grid
     love.graphics.setColor(200, 0, 0, 100)
 
-    drawGrid()
+    -- drawGrid()
    
 
 end
@@ -32,7 +34,7 @@ function drawGrid()
  
  	-- Global values
 	inc = 33
-	love.graphics.setFont(font)
+	-- love.graphics.setNewFont(font)
  	windowHeight = love.graphics.getHeight()
     windowWidth = love.graphics.getWidth()
 	
