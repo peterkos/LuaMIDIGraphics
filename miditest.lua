@@ -16,22 +16,28 @@ local my_score = {
 }
 
 
--- Loading custom score
+-- Load custom score
 local altscore = {}
 
 local midif = io.open('miditest.mid', 'r')
 bachScore = MIDI.midi2score(midif:read("*a"))
 midif:close()
 
-for itrack = 2, #bachScore do
+-- Assume one track (for now)
+	
+-- Sort by note start rather than note end
+-- (midi2score() sorts by note end)
+firstTrack = 2
+table.sort(bachScore[firstTrack], function (e1,e2) return e1[2]<e2[2] end)
 
-	-- Sort by note start rather than note end
-	table.sort(bachScore[itrack], function (e1,e2) return e1[2]<e2[2] end)
-
-	for k, event in ipairs(bachScore[itrack]) do
-		io.write(string.format("%-15s %s, %s\n", event[1], event[2], event[3]))
+	-- For every note, do something.
+	for k, event in ipairs(bachScore[firstTrack]) do
+		if (event[1] == "note") then 
+			io.write(string.format("%s %s, %s, %s, %s, %s\n", event[1], event[2], event[3], event[4], event[5], event[6], event[7]))
+		end
+		
 	end
-end
+-- end
 
 
 
