@@ -31,10 +31,17 @@ firstTrack = 2
 table.sort(bachScore[firstTrack], function (e1,e2) return e1[2]<e2[2] end)
 	
 -- Descriptive header for next output chunk
-io.write("{'note' , start, duration, channel , note , velocity}\n")
 io.write("[type, start, duration, chan, note, velocity]\n")
 
--- For every note, do something.
+
+-- Returns note table for parsing
+function getMIDIData() 
+	return ipairs(bachScore[firstTrack])
+end
+
+
+
+--[[ Loop through table of notes	
 for k, event in ipairs(bachScore[firstTrack]) do
 
 	if (event[1] == "note") then 
@@ -50,4 +57,6 @@ for k, event in ipairs(bachScore[firstTrack]) do
 
 	end
 end
+
+-- ]]
 
