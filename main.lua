@@ -8,23 +8,32 @@ function love.load()
     love.graphics.setBackgroundColor(255, 255, 255)
     love.graphics.setColor(0, 0, 0)
 
+    -- Grab MIDI data
+    midiData = getMIDIData()
+    print("---------------------")
+    debugNotes()
 
-    -- Run MIDI
-    -- doTheThing()
+
 end
 
 
 
 function love.draw()
 
+    -- Draw a debugging grid
+    love.graphics.setColor(200, 0, 0, 100)
+    -- drawGrid()
+
     love.graphics.setColor(0, 200, 0)
     love.graphics.print("Hello World", 400, 300)
 
-    -- Prep for grid
-    love.graphics.setColor(200, 0, 0, 100)
+    -- for k, event in midiData do
+    -- 	if (event[1] == 'note') then
+    		
+    -- 		-- love.graphics.line()
 
-    -- drawGrid()
-   
+    -- 	end
+    -- end
 
 end
 
