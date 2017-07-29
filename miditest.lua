@@ -25,38 +25,51 @@ midif:close()
 
 -- Assume one track (for now)
 	
--- Sort by note start rather than note end
+-- Sort by note start time rather than note end
 -- (midi2score() sorts by note end)
 firstTrack = 2
+
 table.sort(bachScore[firstTrack], function (e1,e2) return e1[2]<e2[2] end)
-	
--- Descriptive header for next output chunk
-io.write("[type, start, duration, chan, note, velocity]\n")
 
+-- Prune non-notes
 
--- Returns note table for parsing
-function getMIDIData() 
-	return ipairs(bachScore[firstTrack])
-end
+removed = 0
 
-
-
---[[ Loop through table of notes	
-for k, event in ipairs(bachScore[firstTrack]) do
-
-	if (event[1] == "note") then 
-		io.write(string.format("%5s, %5s, %5s, %4s, %5s, %6s\n", event[1], event[2], event[3], event[4], event[5], event[6]))
-
-		-- Parameters of current note
-		local nStart    = event[2]
-		local nDuration = event[3]
-		local nChannel  = event[4]
-		local nNote     = event[5]
-		local nVelocity = event[6]
-		local noteStart = event[7]
-
+local i = 1
+for i=#bachScore[firstTrack], 1, -1 do
+	if (bachScore[firstTrack][i][1] == "note") then 
+		io.write(string.format("Kept %s %d\n", bachScore[firstTrack][i], i))
+		i = i + 1
+	else
+	    io.write(string.format("Removing thing %d %s\n", i, bachScore[firstTrack][i][1]))
+	    table.remove(bachScore[firstTrack], i)
+	    removed = removed + 1
 	end
 end
 
--- ]]
+bachScoreNotes = bachScore
+io.write(string.format("Removed %d", removed))
+
+
+
+
+-- FUNCTIONS
+
+-- Returns note table for parsing
+function getMIDIData() 
+	return pairs(bachScoreNotes[firstTrack])
+end
+
+-- Print out info of notes
+function debugNotes() 
+	
+	io.write("[type, start, duration, chan, note, velocity]\n")
+	removed = 0
+
+	for k, event in ipairs(bachScoreNotes[firstTrack]) do
+		io.write(string.format("%d %5s, %5s, %5s, %4s, %5s, %6s\n", k, event[1], event[2], event[3], event[4], event[5], event[6]))
+	end
+
+end
+
 
