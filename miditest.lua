@@ -38,10 +38,10 @@ removed = 0
 local i = 1
 for i=#bachScore[firstTrack], 1, -1 do
 	if (bachScore[firstTrack][i][1] == "note") then 
-		io.write(string.format("Kept %s %d\n", bachScore[firstTrack][i], i))
+		io.write(string.format("Kept %s %d\n", bachScore[firstTrack][i][1], i))
 		i = i + 1
 	else
-	    io.write(string.format("Removing thing %d %s\n", i, bachScore[firstTrack][i][1]))
+	    io.write(string.format("Removing  %d %s\n", i, bachScore[firstTrack][i][1]))
 	    table.remove(bachScore[firstTrack], i)
 	    removed = removed + 1
 	end
@@ -57,11 +57,11 @@ io.write(string.format("Removed %d", removed))
 
 -- Returns note table for parsing
 function getMIDIData() 
-	return pairs(bachScoreNotes[firstTrack])
+	return bachScoreNotes[firstTrack]
 end
 
 -- Print out info of notes
-function debugNotes() 
+function printNotes() 
 	
 	io.write("[type, start, duration, chan, note, velocity]\n")
 	removed = 0
