@@ -17,7 +17,8 @@ function score.new(filename)
 	-- (midi2score() sorts by note end)
 	table.sort(score.scoreNotes[2], function (e1, e2) return e1[2] < e2[2] end)
 
-	score.scoreNotes = removeNonNotes()
+	-- Output only the second track (first track of notes)
+	score.scoreNotes = removeNonNotes()[2]
 end
 
 
@@ -27,7 +28,7 @@ function score.printNotes()
 	
 	io.write("[type, start, duration, chan, note, velocity]\n")
 
-	for k, event in ipairs(score.scoreNotes[2]) do
+	for k, event in ipairs(score.scoreNotes) do
 		io.write(string.format("%d %5s, %5s, %5s, %4s, %5s, %6s\n", k, event[1], event[2], event[3], event[4], event[5], event[6]))
 	end
 
