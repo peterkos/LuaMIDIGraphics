@@ -16,7 +16,8 @@ function love.load()
 
 end
 
-
+-- Property to prevent redrawing of notes
+local notesWereDrawn = false
 
 function love.draw()
 
@@ -27,13 +28,15 @@ function love.draw()
     love.graphics.setColor(0, 200, 0)
     love.graphics.print("Hello World", 400, 300)
 
-    -- for k, event in midiData do
-    -- 	if (event[1] == 'note') then
-    		
-    -- 		-- love.graphics.line()
+    -- Does this only once
+    if notesWereDrawn == false then
+    	for k, event in pairs(midiInput.scoreNotes) do
+    		print(string.format("%d, %s, %s, %s", k, event[1], event[2] , event[3]))
+    		love.timer.sleep(event[3] * .001)
+    	end
 
-    -- 	end
-    -- end
+    	notesWereDrawn = true
+    end
 
 end
 
@@ -45,6 +48,7 @@ function drawGrid()
  	inc = 33
 	-- love.graphics.setNewFont(font)
 	windowHeight = love.graphics.getHeight()
+	windowWidth = love.graphics.getWidth()
 	
 
     -- Initialize parameters
@@ -61,7 +65,7 @@ function drawGrid()
     end
 
     -- Draw horizontal
-	for i = 0, windowHeight / 10, 1 do
+    for i = 0, windowHeight / 10, 1 do
     	love.graphics.line(0, y1, windowWidth, y2)
     	y1 = y1 + inc
     	y2 = y2 + inc
