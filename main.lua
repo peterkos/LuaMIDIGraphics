@@ -1,17 +1,17 @@
 
-require("miditest")
+-- require("miditest")
+local midiInput = require("midi2")
 io.stdout:setvbuf('no') -- Allows console printing on macOS
 
 
 function love.load()
 	love.graphics.setNewFont(50)
-    love.graphics.setBackgroundColor(255, 255, 255)
-    love.graphics.setColor(0, 0, 0)
+	love.graphics.setBackgroundColor(255, 255, 255)
+	love.graphics.setColor(0, 0, 0)
 
-    -- Grab MIDI data
-    midiData = getMIDIData()
-    print("---------------------")
-    debugNotes()
+	-- Load a MIDI file
+    midiInput.new("miditest")
+    midiInput.printNotes()
 
 
 end
@@ -40,12 +40,11 @@ end
 
 -- Draw a grid for debugging pourposes. Purpoises. Porcupines!
 function drawGrid()
- 
+
  	-- Global values
-	inc = 33
+ 	inc = 33
 	-- love.graphics.setNewFont(font)
- 	windowHeight = love.graphics.getHeight()
-    windowWidth = love.graphics.getWidth()
+	windowHeight = love.graphics.getHeight()
 	
 
     -- Initialize parameters
