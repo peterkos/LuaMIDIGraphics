@@ -1,6 +1,6 @@
 
 -- require("miditest")
-local midiInput = require("midi2")
+local midiInput = require("MidiParser")
 io.stdout:setvbuf('no') -- Allows console printing on macOS
 
 
