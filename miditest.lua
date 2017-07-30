@@ -64,12 +64,9 @@ end
 function printNotes() 
 	
 	io.write("[type, start, duration, chan, note, velocity]\n")
-	removed = 0
 
 	for k, event in ipairs(bachScoreNotes[firstTrack]) do
 		io.write(string.format("%d %5s, %5s, %5s, %4s, %5s, %6s\n", k, event[1], event[2], event[3], event[4], event[5], event[6]))
 	end
 
 end
-
-

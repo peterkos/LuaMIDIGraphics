@@ -51,7 +51,7 @@ removeNonNotes = function()
 		end
 	end
 
-	io.write(string.format("Removed %d", removed))
+	io.write(string.format("\nRemoved %d events\n-----\n\n", removed))
 	return scoreNotes
 	
 
