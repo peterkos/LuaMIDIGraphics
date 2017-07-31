@@ -17,6 +17,14 @@ function love.load()
 
 end
 
+-- Quit on loss of focus, for faster coding
+function love.update(dt)
+	if love.window.hasFocus() == false then
+		love.event.quit(0)
+	end
+end
+
+
 -- Property to prevent redrawing of notes
 local notesWereDrawn = false
 local noteCount = 1
