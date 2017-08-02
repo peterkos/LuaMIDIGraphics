@@ -11,11 +11,8 @@ function love.load()
 	love.graphics.setColor(0, 0, 0)
 
 	-- Load a MIDI file
-	-- midiInput.new("miditest")
 	midiInput.new("midimidi")
 	midiInput.printNotes()
-
-
 
 end
 
@@ -24,6 +21,8 @@ local currentDrawn = 1
 local drawn = {}
 local timeElapsed = 0
 local ddt = 0
+
+
 function love.update(dt)
 	
 	-- Quit on loss of focus, for faster coding	
@@ -78,6 +77,7 @@ end
 
 
 -- Draw a grid for debugging pourposes. Purpoises. Porcupines!
+-- @TODO: Fix grid to line up with note offset
 function drawGrid()
 
 	local inc = 33
