@@ -18,20 +18,35 @@ function love.load()
 
 end
 
+-- Property to prevent redrawing of notes
+local currentDrawn = 1
+local drawn = {}
+local timeElapsed = 0
+local ddt = 0
 function love.update(dt)
 	
 	-- Quit on loss of focus, for faster coding	
 	if love.window.hasFocus() == false then
 		love.event.quit(0)
 	end
+    
+    -- Timer only runs while MIDI is being drawn
+    if currentDrawn <= #midiInput.scoreNotes then
+        timeElapsed = timeElapsed + dt
+    end
+
+    -- Run the timer! 
+    -- 
+	if timeElapsed > .5 and currentDrawn < #midiInput.scoreNotes + 1 then
+	    timeElapsed = 0
+		drawn[currentDrawn] = midiInput.scoreNotes[currentDrawn]
+		currentDrawn = currentDrawn + 1
+	end
+	
+	love.graphics.print(1/dt,10,10)
 
 end
 
-
--- Property to prevent redrawing of notes
-local currentDrawn = 1
-local timer = 0
-local drawn = {}
 
 function love.draw()
 
@@ -42,13 +57,9 @@ function love.draw()
 	love.graphics.setColor(0, 200, 0)
 	love.graphics.print("Hello World", 400, 300)
 
+	--  Prints FPS (civilized way)
+	love.graphics.print("Current FPS: " .. love.timer.getFPS(), 10, 10)
 
-	timer = timer + 1
-
-	if timer % 15 == 0 and currentDrawn < #midiInput.scoreNotes + 1 then
-		drawNotes(currentDrawn)
-		currentDrawn = currentDrawn + 1
-	end
 
 	-- Draws notes without delay, permanantly
 	for k, note in ipairs(drawn) do
@@ -56,18 +67,6 @@ function love.draw()
 	end
 
 end
-
-
--- Draw new notes, with delay from update(dt)
-function drawNotes(i)
-	local note = midiInput.scoreNotes[i]
-	print("[INFO] i is equal to " .. i)
-	love.graphics.rectangle("fill", 100 + (note[2] / 10), 200 + (i * 20), (note[3] / 10), 20)
-
-	-- Adds to list of already-drawn notes
-	drawn[i] = note
-end
-
 
 -- Draw a grid for debugging pourposes. Purpoises. Porcupines!
 function drawGrid()
