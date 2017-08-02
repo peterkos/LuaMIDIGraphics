@@ -17,17 +17,23 @@ function love.load()
 
 end
 
--- Quit on loss of focus, for faster coding
+
 function love.update(dt)
+	
+	-- Quit on loss of focus, for faster coding	
 	if love.window.hasFocus() == false then
 		love.event.quit(0)
 	end
+
+	-- Check to see if note is over. If so, end!
+	
+
 end
 
 
 -- Property to prevent redrawing of notes
 local notesWereDrawn = false
-local noteCount = 1
+local currentNote = 1
 
 function love.draw()
 
@@ -38,15 +44,14 @@ function love.draw()
 	love.graphics.setColor(0, 200, 0)
 	love.graphics.print("Hello World", 400, 300)
 
-    -- Does this only once
-    if notesWereDrawn == false then
-    	for k, event in pairs(midiInput.scoreNotes) do
-    		print(string.format("%d, %s, %s, %s", k, event[1], event[2] , event[3]))
-    		love.timer.sleep(event[3] * .001)
-    	end
+	if currentNote < 5 then
+		local notes = midiInput.scoreNotes[currentNote]
+		love.graphics.rectangle("fill", 100 + (notes[2] / 10), 200, (notes[3] / 10), 20)
+		love.timer.sleep(0.5)
+		currentNote = currentNote + 1
+	end
 
-    	notesWereDrawn = true
-    end
+
 
 end
 
