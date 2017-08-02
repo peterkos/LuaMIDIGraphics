@@ -15,8 +15,8 @@ function love.load()
 	midiInput.printNotes()
 
 
-end
 
+end
 
 function love.update(dt)
 	
@@ -25,15 +25,13 @@ function love.update(dt)
 		love.event.quit(0)
 	end
 
-	-- Check to see if note is over. If so, end!
-	
-
 end
 
 
 -- Property to prevent redrawing of notes
-local notesWereDrawn = false
-local currentNote = 1
+local currentDrawn = 1
+local timer = 0
+local drawn = {}
 
 function love.draw()
 
@@ -44,15 +42,28 @@ function love.draw()
 	love.graphics.setColor(0, 200, 0)
 	love.graphics.print("Hello World", 400, 300)
 
-	if currentNote < 5 then
-		local notes = midiInput.scoreNotes[currentNote]
-		love.graphics.rectangle("fill", 100 + (notes[2] / 10), 200, (notes[3] / 10), 20)
-		love.timer.sleep(0.5)
-		currentNote = currentNote + 1
+
+	timer = timer + 1
+
+	if timer % 15 == 0 and currentDrawn < #midiInput.scoreNotes + 1 then
+		drawNotes(currentDrawn)
+		currentDrawn = currentDrawn + 1
 	end
 
+	-- Draws notes without delay, permanantly
+	for k, note in ipairs(drawn) do
+		love.graphics.rectangle("fill", 100 + (note[2] / 10), 200 + (k * 20), (note[3] / 10), 20)
+	end
 
+end
 
+function drawNotes(i)
+	local note = midiInput.scoreNotes[i]
+	print("[INFO] i is equal to " .. i)
+	love.graphics.rectangle("fill", 100 + (note[2] / 10), 200 + (i * 20), (note[3] / 10), 20)
+
+	-- Adds to list of already-drawn notes
+	drawn[i] = note
 end
 
 
