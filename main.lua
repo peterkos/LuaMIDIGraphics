@@ -37,7 +37,6 @@ function love.update(dt)
     end
 
     -- Run the timer! 
-    -- 
 	if timeElapsed > .5 and currentDrawn < #midiInput.scoreNotes + 1 then
 	    ddt = dt
 	    timeElapsed = 0
@@ -61,12 +60,22 @@ function love.draw()
 	love.graphics.print(math.floor(1/ddt), 10, 10)
 
 
+	-- Draw a middle 
+	love.graphics.line(0, love.graphics.getHeight() / 2, love.graphics.getWidth(), love.graphics.getHeight()/2)
+
 	-- Draws notes without delay, permanantly
 	for k, note in ipairs(drawn) do
-		love.graphics.rectangle("fill", 100 + (note[2] / 10), 200 + ((note[5] - 64) * 20), (note[3] / 10), 20)
+		local noteWidth = (note[3] / 10)
+		local noteHeight = 20
+		local noteX = 100 + (note[2] / 10)
+		--                          v- Center Line                  v- Calculates distance from center
+		local noteY = (love.graphics.getHeight()/2 + (59.5 - note[5]) * noteHeight)
+
+ 		love.graphics.rectangle("fill", noteX, noteY, noteWidth, noteHeight)
 	end
 
 end
+
 
 -- Draw a grid for debugging pourposes. Purpoises. Porcupines!
 function drawGrid()
