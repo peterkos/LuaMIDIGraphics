@@ -56,7 +56,7 @@ function love.draw()
 	love.graphics.setColor(0, 200, 0)
 	love.graphics.print("Hello World", 400, 300)
 	
-	--  Prints FPS ("uncivilized way") 
+	--  Prints FPS ("uncivilized way") <- Courtesy of Franklin
 	love.graphics.print(math.floor(1/ddt), 10, 10)
 
 
