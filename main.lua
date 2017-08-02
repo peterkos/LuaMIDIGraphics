@@ -11,7 +11,8 @@ function love.load()
 	love.graphics.setColor(0, 0, 0)
 
 	-- Load a MIDI file
-	midiInput.new("miditest")
+	-- midiInput.new("miditest")
+	midiInput.new("midimidi")
 	midiInput.printNotes()
 
 
@@ -62,7 +63,7 @@ function love.draw()
 
 	-- Draws notes without delay, permanantly
 	for k, note in ipairs(drawn) do
-		love.graphics.rectangle("fill", 100 + (note[2] / 10), 200 + (k * 20), (note[3] / 10), 20)
+		love.graphics.rectangle("fill", 100 + (note[2] / 10), 200 + ((note[5] - 64) * 20), (note[3] / 10), 20)
 	end
 
 end
