@@ -38,12 +38,11 @@ function love.update(dt)
     -- Run the timer! 
     -- 
 	if timeElapsed > .5 and currentDrawn < #midiInput.scoreNotes + 1 then
+	    ddt = dt
 	    timeElapsed = 0
 		drawn[currentDrawn] = midiInput.scoreNotes[currentDrawn]
 		currentDrawn = currentDrawn + 1
 	end
-	
-	love.graphics.print(1/dt,10,10)
 
 end
 
@@ -56,9 +55,9 @@ function love.draw()
 
 	love.graphics.setColor(0, 200, 0)
 	love.graphics.print("Hello World", 400, 300)
-
-	--  Prints FPS (civilized way)
-	love.graphics.print("Current FPS: " .. love.timer.getFPS(), 10, 10)
+	
+	--  Prints FPS ("uncivilized way") 
+	love.graphics.print(math.floor(1/ddt), 10, 10)
 
 
 	-- Draws notes without delay, permanantly
