@@ -1,6 +1,6 @@
 
 -- require("miditest")
-local inspect = require("inspect")
+-- local inspect = require("inspect")
 local midiInput = require("MidiParser")
 io.stdout:setvbuf('no') -- Allows console printing on macOS
 
@@ -19,6 +19,7 @@ end
 -- Property to prevent redrawing of notes
 local currentDrawn = 1
 local drawn = {}
+drawDelay = 0
 local timeElapsed = 0
 local ddt = 0
 
@@ -35,8 +36,13 @@ function love.update(dt)
         timeElapsed = timeElapsed + dt
     end
 
-    -- Run the timer! 
-	if timeElapsed > .5 and currentDrawn < #midiInput.scoreNotes + 1 then
+
+    -- Add a delay for the duration of each note
+    if currentDrawn < #midiInput.scoreNotes + 1 then
+    	drawDelay = midiInput.scoreNotes[currentDrawn][3] / 800
+    end
+
+	if timeElapsed > drawDelay and currentDrawn < #midiInput.scoreNotes + 1 then
 	    ddt = dt
 	    timeElapsed = 0
 		drawn[currentDrawn] = midiInput.scoreNotes[currentDrawn]
@@ -51,9 +57,6 @@ function love.draw()
 	-- Draw a debugging grid
 	love.graphics.setColor(200, 0, 0, 100)
 	-- drawGrid()
-
-	love.graphics.setColor(0, 200, 0)
-	love.graphics.print("Hello World", 400, 300)
 	
 	--  Prints FPS ("uncivilized way") <- Courtesy of Franklin
 	love.graphics.print(math.floor(1/ddt), 10, 10)
@@ -70,7 +73,7 @@ function love.draw()
 		--                          v- Center Line                  v- Calculates distance from center
 		local noteY = (love.graphics.getHeight()/2 + (59.5 - note[5]) * noteHeight)
 
- 		love.graphics.rectangle("fill", noteX, noteY, noteWidth, noteHeight)
+		love.graphics.rectangle("fill", noteX, noteY, noteWidth, noteHeight)
 	end
 
 end
