@@ -1,9 +1,11 @@
 
--- require("miditest")
--- local inspect = require("inspect")
 local midiInput = require("MidiParser")
+require("menu")
 io.stdout:setvbuf('no') -- Allows console printing on macOS
 
+-- Set gamestate
+Gamestate = require("gamestate")
+game = {}
 
 function love.load()
 	love.graphics.setNewFont(50)
@@ -14,7 +16,12 @@ function love.load()
 	midiInput.new("midimidi")
 	midiInput.printNotes()
 
+	-- Set Gamestate and load menu
+	Gamestate.registerEvents()
+    Gamestate.switch(menu)
+
 end
+
 
 -- Property to prevent redrawing of notes
 local currentDrawn = 1
@@ -52,7 +59,14 @@ function love.update(dt)
 end
 
 
-function love.draw()
+
+	
+
+
+----------
+-- GAME --
+----------
+function game:draw()
 
 	-- Draw a debugging grid
 	love.graphics.setColor(200, 0, 0, 100)
@@ -81,6 +95,7 @@ end
 
 -- Draw a grid for debugging pourposes. Purpoises. Porcupines!
 -- @TODO: Fix grid to line up with note offset
+-- @TODO: Move constants to separte file
 function drawGrid()
 
 	local inc = 33
