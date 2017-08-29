@@ -1,6 +1,7 @@
 
 local midiInput = require("MidiParser")
 require("menu")
+require("pause")
 io.stdout:setvbuf('no') -- Allows console printing on macOS
 
 -- Set gamestate
@@ -49,23 +50,35 @@ function love.update(dt)
     	drawDelay = midiInput.scoreNotes[currentDrawn][3] / 800
     end
 
-	if timeElapsed > drawDelay and currentDrawn < #midiInput.scoreNotes + 1 then
-	    ddt = dt
-	    timeElapsed = 0
-		drawn[currentDrawn] = midiInput.scoreNotes[currentDrawn]
-		currentDrawn = currentDrawn + 1
+    -- Checks to see if draw screen is not covered by pause menu
+    -- If not, it continues running
+    if (Gamestate.current() == game) then
+		if timeElapsed > drawDelay and currentDrawn < #midiInput.scoreNotes + 1 then
+		    ddt = dt
+		    timeElapsed = 0
+			drawn[currentDrawn] = midiInput.scoreNotes[currentDrawn]
+			currentDrawn = currentDrawn + 1
+		end
 	end
+
 
 end
 
 
 
-	
-
-
 ----------
 -- GAME --
 ----------
+
+-- Pause menu!
+function game:keypressed(key)
+	if key == "escape" then
+		return Gamestate.push(pause)
+	end
+end
+
+
+
 function game:draw()
 
 	-- Draw a debugging grid
