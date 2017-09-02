@@ -7,11 +7,16 @@ menu = {}
 -- buttonY is same for both 
 local windowHeight = love.graphics.getHeight()
 local windowWidth = love.graphics.getWidth()
-local buttonWidth  = 300
-local buttonHeight = 100
+local buttonWidth  = 200
+local buttonHeight = 50
 local button1X = (windowWidth / 2) - (buttonWidth + 50)
 local button2X = (windowWidth / 2) + 50
-local buttonY = windowHeight / 2 - (buttonHeight / 2)
+local buttonY = windowHeight / 2 + 50
+
+function menu:enter() 
+	love.graphics.setDefaultFilter("nearest", "nearest", 1)
+	logo = love.graphics.newImage("logo.png")
+end
 
 
 function menu:mousepressed(x, y, button)
