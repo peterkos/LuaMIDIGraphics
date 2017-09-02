@@ -23,14 +23,14 @@ function menu:mousepressed(x, y, button)
 		if (x > button1X and x < button1X + buttonWidth) and
 			(y > buttonY and y < buttonY + buttonHeight) then
 
-			-- Switch to gamestate
+			-- Switch to main game
 			Gamestate.switch(game)
 
 		-- Check right button bounds
 		elseif (x > button2X and x < button2X + buttonWidth) and
 			(y > buttonY and y < buttonY + buttonHeight) then
 
-			-- Quit game
+			-- Quit the app
 			love.event.quit()
 
 		end
@@ -41,14 +41,29 @@ end
 
 function menu:draw()
 
-	-- First button
-	love.graphics.setColor(200, 0, 0, 100)
+	-- Set button text font size
+	newFont = love.graphics.newFont(30)
+	love.graphics.setFont(newFont)
+
+
+	-- Draw background
+	love.graphics.setColor(141, 107, 148)
+	-- love.graphics.rectangle("fill", 0, 0, windowWidth, windowHeight)
+
+
+	-- Draw logo picture
+	love.graphics.draw(logo, 0, 0)
+
+	-- First button	
+	-- love.graphics.setColor(200, 0, 0, 100)
+	love.graphics.setColor(232, 219, 197)
 	love.graphics.rectangle("fill", button1X,
 									buttonY, 
 									buttonWidth, buttonHeight)
 
-	love.graphics.setColor(255, 255, 255, 255)
-	love.graphics.print("Start", button1X + (buttonWidth / 4), buttonY + 25)
+	-- love.graphics.setColor(255, 255, 255, 255)
+	love.graphics.setColor(141, 107, 148)
+	love.graphics.printf("Start", button1X, buttonY + 10, buttonWidth, "center")
 
 	love.graphics.setColor(200, 0, 0, 100)
 	love.graphics.rectangle("fill", button2X,
@@ -56,7 +71,7 @@ function menu:draw()
 									buttonWidth, buttonHeight)
 
 	love.graphics.setColor(255, 255, 255, 255)
-	love.graphics.print("Quit", button2X + (buttonWidth / 4), buttonY + 25)
+	love.graphics.printf("Quit", button2X, buttonY + 10, buttonWidth, "center")
 
 
 end
